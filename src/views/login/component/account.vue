@@ -61,6 +61,8 @@ import { initBackEndControlRoutes } from '/@/router/backEnd';
 import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 import { NextLoading } from '/@/utils/loading';
+import { useLoginApi } from '/@/api/login'
+const loginApi = useLoginApi();
 
 export default defineComponent({
 	name: 'loginAccount',
@@ -74,7 +76,7 @@ export default defineComponent({
 			isShowPassword: false,
 			ruleForm: {
 				userName: 'admin',
-				password: '123456',
+				password: '923691372',
 				code: '1234',
 			},
 			loading: {
@@ -87,9 +89,15 @@ export default defineComponent({
 		});
 		// 登录
 		const onSignIn = async () => {
+      console.log("onSignIn")
 			state.loading.signIn = true;
+
+      let userRes = await loginApi.signIn({
+          "account": state.ruleForm.userName,
+          "password": state.ruleForm.password
+      })
 			// 存储 token 到浏览器缓存
-			Session.set('token', Math.random().toString(36).substr(0));
+			Session.set('token', userRes.token);
 			// 模拟数据，对接接口时，记得删除多余代码及对应依赖的引入。用于 `/src/stores/userInfo.ts` 中不同用户登录判断（模拟数据）
 			Cookies.set('userName', state.ruleForm.userName);
 			if (!themeConfig.value.isRequestRoutes) {

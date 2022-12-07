@@ -1,6 +1,12 @@
 // 定义内容
 export default {
 	router: {
+    articleEdit:'文章编辑',
+    article:'文章',
+    articleList:'文章管理',
+    articleTagList:'文章标签管理',
+    articleCategoryList:'文章分类管理',
+    articleCategoryListEdit:'文章分类编辑',
 		home: '首页',
 		system: '系统设置',
 		systemMenu: '菜单管理',

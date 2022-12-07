@@ -12,9 +12,13 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(
 	(config) => {
+    console.log("发请求",config)
+    console.log(Session.get('token'),(<any>config.headers))
 		// 在发送请求之前做些什么 token
 		if (Session.get('token')) {
-			(<any>config.headers).common['Authorization'] = `${Session.get('token')}`;
+			(<any>config.headers)['Authorization'] = `Bearer ${Session.get('token')}`;
+      // console.log((<any>config.headers))
+
 		}
 		return config;
 	},
@@ -27,23 +31,25 @@ service.interceptors.request.use(
 // 添加响应拦截器
 service.interceptors.response.use(
 	(response) => {
+    console.log("first")
 		// 对响应数据做点什么
 		const res = response.data;
-		if (res.code && res.code !== 0) {
+		if (res.code && res.code !== 200) {
 			// `token` 过期或者账号已在别处登录
-			if (res.code === 401 || res.code === 4001) {
+			if (res.code === 401) {
 				Session.clear(); // 清除浏览器全部临时缓存
 				window.location.href = '/'; // 去登录页
-				ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
-					.then(() => {})
-					.catch(() => {});
 			}
+      ElMessageBox.alert(res.msg, '提示', {})
+      .then(() => {})
+      .catch(() => {});
 			return Promise.reject(service.interceptors.response);
 		} else {
 			return response.data;
 		}
 	},
 	(error) => {
+    console.log(error)
 		// 对响应错误做点什么
 		if (error.message.indexOf('timeout') != -1) {
 			ElMessage.error('网络超时');

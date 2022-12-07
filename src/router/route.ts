@@ -46,6 +46,99 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					icon: 'iconfont icon-shouye',
 				},
 			},
+      {
+				path: '/article',
+				name: 'article',
+				component: () => import('/@/layout/routerView/parent.vue'),
+				redirect: '/article/list',
+				meta: {
+					title: 'message.router.article',
+					isLink: '',
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: false,
+					isIframe: false,
+					roles: ['admin'],
+					icon: 'iconfont icon-xitongshezhi',
+				},
+				children: [
+					{
+						path: '/article/list',
+						name: 'articleList',
+						component: () => import('/@/views/article/list/index.vue'),
+						meta: {
+							title: 'message.router.articleList',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'iconfont icon-caidan',
+						}
+					},
+          {
+						path: '/article/edit',
+						name: 'articleEdit',
+						component: () => import('/@/views/article/list/editArticle.vue'),
+						meta: {
+							title: 'message.router.articleEdit',
+							isLink: '',
+							isHide: true,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'iconfont icon-caidan',
+						}
+					},
+          {
+						path: '/article/tagList',
+						name: 'articleTagList',
+						component: () => import('/@/views/article/tagList/index.vue'),
+						meta: {
+							title: 'message.router.articleTagList',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'iconfont icon-caidan',
+						}
+					},
+          {
+						path: '/article/categoryList',
+						name: 'articleCategoryList',
+						component: () => import('/@/views/article/categoryList/index.vue'),
+						meta: {
+							title: 'message.router.articleCategoryList',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'iconfont icon-caidan',
+						}
+					},
+          {
+						path: '/article/categoryList/edit',
+						name: 'articleCategoryListEdit',
+						component: () => import('/@/views/article/categoryList/edit.vue'),
+						meta: {
+							title: 'message.router.articleCategoryListEdit',
+							isLink: '',
+							isHide: true,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'iconfont icon-caidan',
+						}
+					}
+        ]
+			},
 			{
 				path: '/system',
 				name: 'system',

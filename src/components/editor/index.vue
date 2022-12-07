@@ -37,10 +37,11 @@ export default defineComponent({
 		// 高度
 		height: {
 			type: String,
-			default: () => '310px',
+			default: () => '70vh',
 		},
 	},
 	setup(props, { emit }) {
+    console.log(props.modelValue)
 		const editorRef = shallowRef();
 		const state = reactive({
 			editorConfig: {
@@ -50,12 +51,14 @@ export default defineComponent({
 		});
 		// 编辑器回调函数
 		const handleCreated = (editor: any) => {
+      console.log("handleCreated",editor)
 			editorRef.value = editor;
 		};
 		// 编辑器内容改变时
 		const handleChange = (editor: any) => {
 			// console.log(editor.getText());
 			// console.log(editor.getHtml());
+      console.log("handleChange")
 			emit('update:modelValue', editor.getHtml());
 		};
 		// 监听是否禁用改变
@@ -71,6 +74,22 @@ export default defineComponent({
 				deep: true,
 			}
 		);
+    // 回显数据方式一：深度监听
+    watch(
+			() => props.modelValue,
+			(modelValue) => {
+				state.editorVal = modelValue
+			},
+			{
+				deep: true,
+			}
+		);
+
+    // 回显数据方式二 ：父组件调用子组件方法
+    const initEditorVal = (editorVal:string) => {
+      state.editorVal = editorVal
+    }
+    
 		// 页面销毁时
 		onBeforeUnmount(() => {
 			const editor = editorRef.value;
@@ -82,6 +101,7 @@ export default defineComponent({
 			handleCreated,
 			handleChange,
 			...toRefs(state),
+      initEditorVal
 		};
 	},
 });

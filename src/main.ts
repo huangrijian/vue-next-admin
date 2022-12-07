@@ -11,6 +11,8 @@ import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
 import VueGridLayout from 'vue-grid-layout';
 
+import '/@/assets/style/main.css';
+
 const app = createApp(App);
 
 directive(app);
